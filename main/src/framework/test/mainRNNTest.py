@@ -1,54 +1,11 @@
-import sys, random, math
-from collections import Counter
 import numpy as np
 
-from layers.crossentropyloss import CrossEntropyLoss
-from layers.embedding import Embedding
-from layers.rnncell import RNNCell
-from optimization.sgd import SGD
-from tensor.tensor import Tensor
-#Подготовка входных данных
-f = open('qa1_single-supporting-fact_train.txt', 'r')
-raw = f.readlines()
-f.close()
+from framework.layers.crossentropyloss import CrossEntropyLoss
+from framework.layers.embedding import Embedding
+from framework.layers.rnncell import RNNCell
+from framework.optimization.sgd import SGD
+from framework.tensor.tensor import Tensor
 
-tokens = list()
-for line in raw[0:1000]:
-    tokens.append(line.lower().replace("\n", "").split(" ")[1:])
-
-new_tokens = list()
-for line in tokens:
-    new_tokens.append(['-'] * (6 - len(line)) + line)
-
-tokens = new_tokens
-
-vocab = set()
-for sent in tokens:
-    for word in sent:
-        vocab.add(word)
-
-vocab = list(vocab)
-
-word2index = {}
-for i, word in enumerate(vocab):
-    word2index[word] = i
-
-
-def words2indices(sentence):
-    idx = list()
-    for word in sentence:
-        idx.append(word2index[word])
-    return idx
-
-
-indices = list()
-for line in tokens:
-    idx = list()
-    for w in line:
-        idx.append(word2index[w])
-    indices.append(idx)
-
-data = np.array(indices)
 #Архитектура
 embed = Embedding(vocab_size=len(vocab),dim=16)
 model = RNNCell(n_inputs=16, n_hidden=16, n_output=len(vocab))

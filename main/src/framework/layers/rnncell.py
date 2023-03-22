@@ -1,10 +1,10 @@
 from flatbuffers.builder import np
 
-from lightweightDeepLearningFramework.layers.layer import Layer
-from lightweightDeepLearningFramework.layers.linear import Linear
-from lightweightDeepLearningFramework.layers.sigmoid import Sigmoid
-from lightweightDeepLearningFramework.layers.tanh import Tanh
-from lightweightDeepLearningFramework.tensor.tensor import Tensor
+from framework.layers.layer import Layer
+from framework.layers.linear import Linear
+from framework.layers.sigmoid import Sigmoid
+from framework.layers.tanh import Tanh
+from framework.tensor.tensor import Tensor
 
 
 class RNNCell(Layer):

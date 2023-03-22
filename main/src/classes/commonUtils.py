@@ -9,14 +9,9 @@ class CommonUtils(object):
     @staticmethod
     def getProjectFolder():
         solutionFolder = CommonUtils.getSolutionFolder()
-        return pathlib.Path(solutionFolder).joinpath("ImageProcessingHandmade").joinpath("main").resolve()
+        return pathlib.Path(solutionFolder).joinpath("Framework").joinpath("main").resolve()
 
     @staticmethod
     def getMainResourcesFolder():
         solutionFolder = CommonUtils.getSolutionFolder()
-        return pathlib.Path(solutionFolder).joinpath("ImageProcessingHandmade").joinpath("main").joinpath("resources").resolve()
-
-    @staticmethod
-    def getMainResourcesXPMFolder():
-        solutionFolder = CommonUtils.getSolutionFolder()
-        return pathlib.Path(solutionFolder).joinpath("ImageProcessingHandmade").joinpath("main").joinpath("resources").joinpath("xpm").resolve()
+        return pathlib.Path(solutionFolder).joinpath("Framework").joinpath("main").joinpath("resources").resolve()

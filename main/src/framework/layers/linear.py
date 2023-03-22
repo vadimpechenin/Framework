@@ -1,7 +1,7 @@
 # линейный слой
 import numpy as np
-from lightweightDeepLearningFramework.layers.layer import Layer
-from lightweightDeepLearningFramework.tensor.tensor import Tensor
+from framework.layers.layer import Layer
+from framework.tensor.tensor import Tensor
 
 class Linear(Layer):
 

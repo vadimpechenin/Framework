@@ -1,6 +1,6 @@
-from lightweightDeepLearningFramework.layers.layer import Layer
-from lightweightDeepLearningFramework.layers.linear import Linear
-from lightweightDeepLearningFramework.tensor.tensor import Tensor
+from framework.layers.layer import Layer
+from framework.layers.linear import Linear
+from framework.tensor.tensor import Tensor
 import numpy as np
 
 class LSTMCell(Layer):

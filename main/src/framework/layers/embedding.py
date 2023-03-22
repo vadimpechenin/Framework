@@ -1,7 +1,7 @@
-from lightweightDeepLearningFramework.layers.layer import Layer
+from framework.layers.layer import Layer
 import numpy as np
 
-from lightweightDeepLearningFramework.tensor.tensor import Tensor
+from framework.tensor.tensor import Tensor
 
 
 class Embedding(Layer):

@@ -1,7 +1,7 @@
-from lightweightDeepLearningFramework.layers.crossentropyloss import CrossEntropyLoss
-from lightweightDeepLearningFramework.layers.embedding import Embedding
-from lightweightDeepLearningFramework.layers.lstmcell import LSTMCell
-from lightweightDeepLearningFramework.optimization.sgd import SGD
+from framework.layers.crossentropyloss import CrossEntropyLoss
+from framework.layers.embedding import Embedding
+from framework.layers.lstmcell import LSTMCell
+from framework.optimization.sgd import SGD
 
 
 class ModelLSTM():

@@ -1,5 +1,5 @@
 #Класс слоя, выход функция от входов (mse)
-from lightweightDeepLearningFramework.layers.layer import Layer
+from framework.layers.layer import Layer
 
 
 class MSELoss(Layer):
