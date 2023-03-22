@@ -226,6 +226,19 @@ class Tensor (object):
                           creation_op="tanh")
         return Tensor(np.tanh(self.data))
 
+    def dropout(self, keep_prob):
+        ## Dropout
+        D1 = np.random.rand(self.data.shape[0], self.data.shape[1])  # Step 1: initialize matrix D1 = np.random.rand(..., ...)
+        D1 = D1 < keep_prob  # Step 2: convert entries of D1 to 0 or 1 (using keep_prob as the threshold)
+        self.data = np.multiply(self.data, D1)  # Step 3: shut down some neurons of A1
+        self.data = self.data / keep_prob  # Step 4: scale the value of neu
+        if (self.autograd):
+            return Tensor(self.data,
+                          autograd=True,
+                          creators=[self],
+                          creation_op="dropout")
+        return Tensor(self.data)
+
     def relu(self):
         # Функция активации ReLU
         if (self.autograd):
