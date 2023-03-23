@@ -18,7 +18,7 @@ class LoadModelRNNTest(unittest.TestCase):
 
         # Обучение
         for iter in range(1000):
-            batch_size = 100
+            batch_size = 1
             total_loss = 0
 
             hidden = model.model.init_hidden(batch_size=batch_size)

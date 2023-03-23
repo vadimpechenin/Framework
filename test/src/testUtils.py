@@ -19,6 +19,9 @@ class TestUtils(unittest.TestCase):
     def getMainResourcesFolder():
         return CommonUtils.getMainResourcesFolder()
 
+    @staticmethod
+    def getMainResourcesIMDBFolder():
+        return CommonUtils.getMainResourcesIMDBFolder()
 
 if __name__ == "__main__":
     unittest.main()

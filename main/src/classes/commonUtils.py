@@ -15,3 +15,8 @@ class CommonUtils(object):
     def getMainResourcesFolder():
         solutionFolder = CommonUtils.getSolutionFolder()
         return pathlib.Path(solutionFolder).joinpath("Framework").joinpath("main").joinpath("resources").resolve()
+
+    @staticmethod
+    def getMainResourcesIMDBFolder():
+        solutionFolder = CommonUtils.getSolutionFolder()
+        return pathlib.Path(solutionFolder).joinpath("Framework").joinpath("main").joinpath("resources").joinpath("txt").resolve()
