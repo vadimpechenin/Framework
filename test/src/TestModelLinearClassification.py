@@ -16,7 +16,7 @@ class LinearModelForClassificationTest(unittest.TestCase):
         filename = pathlib.Path(path).joinpath("reviews2.txt").resolve()
         fileNameLabels = pathlib.Path(path).joinpath("labels.txt").resolve()
         vocab, data, targetDataset = load_dataIMDB(filename, fileNameLabels, rawLength=200, sentenseLength=100)
-        model = LinearClassificationOfExpressions(vocab)
+        model = LinearClassificationOfExpressions(vocab,data.shape[1])
 
         nTest = 0.2
         dataTest = data[data.shape[0]-round(data.shape[0]*nTest):]
@@ -29,15 +29,15 @@ class LinearModelForClassificationTest(unittest.TestCase):
             total_loss = 0
             #output_all = Tensor(np.zeros((model.embed.dim, len(targetDatasetTrain))), autograd=True)
             for i in range(dataTrain.shape[0]):
-                t = dataTrain[i]
-                input = Tensor(dataTrain[i], autograd=True)
+                t = dataTrain[i].reshape(1,dataTrain[i].shape[0])
+                input = Tensor(t, autograd=True)
                 output = model.model.forward(input=input)
                 loss = model.criterion.forward(output, Tensor(targetDatasetTrain[i], autograd=True))
                 loss.backward()
                 model.optim.step()
                 total_loss += loss.data
             if (iter % 1 == 0):
-                print("Loss:", total_loss / (dataTrain.size[0] / batch_size))
+                print("Loss:", total_loss / (dataTrain.shape[0] / batch_size))
 
         # Тест обученной сети
         batch_size = 1

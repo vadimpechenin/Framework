@@ -13,7 +13,6 @@ class LinearClassification():
         if (pl==0):
             self.model = Sequential([Linear(2, 3), Tanh(), Linear(3, 1), Sigmoid()])
         else:
-
             self.model = Sequential([Embedding(vocab_size=5, dim=3), Tanh(), Linear(3,1), Sigmoid()])
         self.criterion = MSELoss()
         self.optim = SGD(parameters= self.model.get_parameters(), alpha=0.5)
