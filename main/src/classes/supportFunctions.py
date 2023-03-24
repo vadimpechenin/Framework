@@ -6,6 +6,8 @@ from keras.models import Sequential
 from keras.layers import Dense, Dropout
 from keras.layers import LSTM,Flatten
 
+from framework.tensor.tensor import Tensor
+
 
 def calculate_catecorical_crossentropy(yTarget, yCalculate):
     #Функция для расчета категориальной (в случае двух бинарной) кросс-энтропии
@@ -52,3 +54,32 @@ def build_LSTM_model(maxlen,embedding_dims,num_neurons):
                   metrics=['accuracy'])
     model.summary()
     return model
+
+def calculateResultsOfClassification(iteration, model, dataTrain, dataTest, targetDatasetTest,targetDatasetTrain,batch_size_test,batch_size_train):
+    #batch_size_test = 40
+    #batch_size_train = 160
+
+    correct, score = calculateMetrics(batch_size_test,model,dataTest,targetDatasetTest)
+    correctTrain, scoreTrain = calculateMetrics(batch_size_train, model, dataTrain, targetDatasetTrain)
+    print("***********")
+    print("Эпоха: " + str(iteration))
+    print(
+        'Точность тестирования: ' + str(correct / float(batch_size_test)) + 'Функция потерь (бинарная кроссэнтропия): ' + str(
+            score))
+    print('Точность обучения: ' + str(
+        correctTrain / float(batch_size_train)) + 'Функция потерь (бинарная кроссэнтропия): ' + str(scoreTrain))
+
+def calculateMetrics(batch_size,model,dataTest,targetDatasetTest):
+    hidden = model.LSTM[0].init_hidden(batch_size=batch_size)
+    input = Tensor(dataTest[0:batch_size, :], autograd=True)
+    output, hidden = model.LSTM[0].forward(input=input, hidden=hidden)
+    y_test_predict_ = model.model.forward(input=output)
+    y_test_predict = (np.around(y_test_predict_.data)).astype('int32')
+    y_test = np.array(targetDatasetTest[0:batch_size])
+    correct = 0
+    for i in range(y_test_predict.shape[0]):
+        if (np.abs(y_test[i] - y_test_predict[i]) < 0.5):
+            correct += 1
+    # Кросс-энтропия
+    score = calculate_catecorical_crossentropy(y_test, y_test_predict_.data.reshape((dataTest.shape[0],)))
+    return correct, score
