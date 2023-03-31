@@ -1,4 +1,4 @@
-from flatbuffers.builder import np
+import numpy as np
 
 from framework.layers.layer import Layer
 from framework.layers.linear import Linear

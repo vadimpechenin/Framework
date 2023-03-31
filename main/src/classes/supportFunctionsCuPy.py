@@ -1,12 +1,12 @@
 """
 Вспомогательные функции для презентации результатов
 """
-import numpy as np
+import cupy as np
 from keras.models import Sequential
 from keras.layers import Dense, Dropout
 from keras.layers import LSTM,Flatten
 
-from framework.tensor.tensor import Tensor
+from framework_GPU.tensor.tensor import Tensor
 
 
 def calculate_catecorical_crossentropy(yTarget, yCalculate):
@@ -75,8 +75,8 @@ def calculateMetrics(batch_size,model,dataTest,targetDatasetTest):
     lstm_input_words = model.embed.forward(input=input)
     # lstm_input_sentence = TensorC(lstm_input_words.data.sum(1) / lstm_input_words.data.shape[2], autograd=True)
     lstm_input_sentence = Tensor(lstm_input_words.data.reshape(lstm_input_words.data.shape[0],
-                                                               lstm_input_words.data.shape[1] *
-                                                               lstm_input_words.data.shape[2]), autograd=True)
+                                                                lstm_input_words.data.shape[1] *
+                                                                lstm_input_words.data.shape[2]), autograd=True)
     output, hidden = model.LSTM[0].forward(input=lstm_input_sentence, hidden=hidden)
     y_test_predict_ = model.model.forward(input=output)
     y_test_predict = (np.around(y_test_predict_.data)).astype('int32')

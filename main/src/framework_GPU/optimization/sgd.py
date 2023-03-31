@@ -13,8 +13,9 @@ class SGD(object):
     def step(self, zero=True):
 
         for p in self.parameters:
-
-            p.data -= p.grad.data * self.alpha
-
+            try:
+                p.data -= p.grad.data * self.alpha
+            except:
+                p.data = 0
             if(zero):
                 p.grad.data *= 0

@@ -25,14 +25,19 @@ class LinearModelForClassificationTest(unittest.TestCase):
         target = Tensor(targetDatasetTrain, autograd=True)
         # Обучение
         for iter in range(1000):
-            batch_size = 1
+            batch_size = 40
             total_loss = 0
-            #output_all = Tensor(np.zeros((model.embed.dim, len(targetDatasetTrain))), autograd=True)
-            for i in range(dataTrain.shape[0]):
-                t = dataTrain[i].reshape(1,dataTrain[i].shape[0])
+            number_of_cycle = dataTrain.shape[0] / batch_size
+            number_of_cycle = int(number_of_cycle)
+            for i in range(number_of_cycle):
+                if (batch_size == 1):
+                    t = dataTrain[i].reshape(1, dataTrain[i].shape[0])
+                else:
+                    t = dataTrain[i * batch_size:(i + 1) * batch_size]
                 input = Tensor(t, autograd=True)
                 output = model.model.forward(input=input)
-                loss = model.criterion.forward(output, Tensor(targetDatasetTrain[i], autograd=True))
+                loss = model.criterion.forward(output, Tensor(targetDatasetTrain[i * batch_size:(i + 1) * batch_size],
+                                                               autograd=True))
                 loss.backward()
                 model.optim.step()
                 total_loss += loss.data
