@@ -32,6 +32,10 @@ class TestUtils(unittest.TestCase):
         return "D:\Vadim\PYTHON\Programms\PresidentGrant2022_2023\IMDB"
 
     @staticmethod
+    def getIMDBWithVectorsFolderHome():
+        return "D:\PYTHON\Programms\GrantOfPresident2022\HumanLanguageProject\IMDB"
+
+    @staticmethod
     def getSaveWeightsFolder():
         solutionFolder = CommonUtils.getSolutionFolder()
         return pathlib.Path(solutionFolder).joinpath("Framework").joinpath("test").joinpath(

@@ -1,4 +1,4 @@
-import numpy as np
+import cupy as cp
 
 def openFileArticlex(fileName):
     f = open(fileName)
@@ -6,7 +6,8 @@ def openFileArticlex(fileName):
     f.close()
     return fileСontents
 
-def load_dataIMDB(fileName, fileNameLabels,rawLength=1000, sentenseLength=100):
+
+def load_dataIMDB_NP_CP(fileName, fileNameLabels,rawLength=1000, sentenseLength=100):
     #Основной метод предварительно подготовки слов
     #Метод для загрузки отзывов и рейтингов, создания векторного представления слов
 
@@ -56,6 +57,7 @@ def load_dataIMDB(fileName, fileNameLabels,rawLength=1000, sentenseLength=100):
         indices.append(idx)
 
     data = np.array(indices)
+    data_cp = cp.array(indices)
     targetDataset = list()
     for label in rawLabels[0:rawLength]:
         if label == 'positive\n':
@@ -63,4 +65,4 @@ def load_dataIMDB(fileName, fileNameLabels,rawLength=1000, sentenseLength=100):
         else:
             targetDataset.append(0)
 
-    return vocab, data, targetDataset
+    return vocab, data, data_cp, targetDataset

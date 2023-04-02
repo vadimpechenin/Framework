@@ -45,13 +45,16 @@ class IMDBClassificationKerasTest(unittest.TestCase):
         pl_NN = 1
         maxlen = 400 #Количество токенов
         num_neurons = 50  # Количество нейронов в ячейке памяти
-        batch_size = 1  # Количество примеров, которые демонстрируются сети, перед обратным распространением ошибки и обновлением весов
+        batch_size = 5  # Количество примеров, которые демонстрируются сети, перед обратным распространением ошибки и обновлением весов
         embedding_dims = 300  # Длины создаваемых для передачи в сверточную сеть векторов токенов
-        epochs = 40
+        epochs = 1
         #Путь к данным (уже использованы преобразования слов в векторы)
         path = TestUtils.getIMDBWithVectorsFolderFull()
-
-        mat = scipy.io.loadmat(str(pathlib.Path(path).joinpath("data_test_train.mat").resolve()))
+        try:
+            mat = scipy.io.loadmat(str(pathlib.Path(path).joinpath("data_test_train.mat").resolve()))
+        except:
+            path = TestUtils.getIMDBWithVectorsFolderHome()
+            mat = scipy.io.loadmat(str(pathlib.Path(path).joinpath("data_test_train.mat").resolve()))
         x_train = np.array(mat['x_train'])
         x_test = np.array(mat['x_test'])
         y_train = np.array(mat['y_train']).reshape((x_train.shape[0],))
