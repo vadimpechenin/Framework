@@ -56,7 +56,6 @@ def load_dataIMDB_NP_CP(fileName, fileNameLabels,rawLength=1000, sentenseLength=
             idx.append(word2index[w])
         indices.append(idx)
 
-    data = np.array(indices)
     data_cp = cp.array(indices)
     targetDataset = list()
     for label in rawLabels[0:rawLength]:
@@ -65,4 +64,4 @@ def load_dataIMDB_NP_CP(fileName, fileNameLabels,rawLength=1000, sentenseLength=
         else:
             targetDataset.append(0)
 
-    return vocab, data, data_cp, targetDataset
+    return vocab, data_cp, targetDataset

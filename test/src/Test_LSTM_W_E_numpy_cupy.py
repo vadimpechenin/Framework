@@ -52,7 +52,7 @@ def cupyLSTM(vocab, data,targetDatasetTest, targetDatasetTrain,batch_size_test,b
 
     # Обучение
     for iter in range(epochs):
-        batch_size = 40
+        batch_size = 1
         total_loss = 0
 
         hidden = model.LSTM[0].init_hidden(batch_size=batch_size)
@@ -72,7 +72,7 @@ def cupyLSTM(vocab, data,targetDatasetTest, targetDatasetTrain,batch_size_test,b
             output, hidden = model.LSTM[0].forward(input=lstm_input_sentence, hidden=hidden)
             output = model.model.forward(input=output)
             loss = model.criterion.forward(output, TensorC(targetDatasetTrain[i*batch_size:(i+1)*batch_size], autograd=True))
-            #loss.backward()
+            loss.backward()
             #model.optim.step()
             total_loss += loss.data
         if (iter % 1 == 0):
@@ -89,8 +89,8 @@ class LSTMWithEmbeddingModelForClassificationCupyTest(unittest.TestCase):
         path = TestUtils.getMainResourcesIMDBFolder()
         filename = pathlib.Path(path).joinpath("reviews2.txt").resolve()
         fileNameLabels = pathlib.Path(path).joinpath("labels.txt").resolve()
-        vocab, data, data_cp, targetDataset = load_dataIMDB_NP_CP(filename, fileNameLabels, rawLength=200, sentenseLength=400)
-
+        vocab, data, targetDataset = load_dataIMDB(filename, fileNameLabels, rawLength=1000, sentenseLength=400)
+        vocab, data_cp, targetDataset = load_dataIMDB_NP_CP(filename, fileNameLabels, rawLength=1000, sentenseLength=400)
         nTest = 0.2
         dataTest = data[data.shape[0]-round(data.shape[0]*nTest):]
         dataTrain = data[0:data.shape[0]-round(data.shape[0]*nTest)]
@@ -99,13 +99,13 @@ class LSTMWithEmbeddingModelForClassificationCupyTest(unittest.TestCase):
         dataTrain_cp = data_cp[0:data_cp.shape[0] - round(data_cp.shape[0] * nTest)]
         targetDatasetTest, targetDatasetTrain = targetDataset[len(targetDataset)-round(len(targetDataset)*nTest):], \
             targetDataset[0:len(targetDataset)-round(len(targetDataset)*nTest)]
-        batch_size_test = 40
-        batch_size_train = 160
+        batch_size_test = 200
+        batch_size_train = 800
 
         cupyLSTM(vocab, data_cp, targetDatasetTest, targetDatasetTrain, batch_size_test, batch_size_train, epochs,
                  dataTest_cp, dataTrain_cp)
 
-        numpyLSTM(vocab, data,targetDatasetTest, targetDatasetTrain,batch_size_test,batch_size_train,epochs,dataTest,dataTrain)
+        #numpyLSTM(vocab, data,targetDatasetTest, targetDatasetTrain,batch_size_test,batch_size_train,epochs,dataTest,dataTrain)
 
 
 

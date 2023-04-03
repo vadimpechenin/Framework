@@ -14,7 +14,7 @@ def numpyLSTM(vocab, data,targetDatasetTest, targetDatasetTrain,batch_size_test,
 
     # Обучение
     for iter in range(epochs):
-        batch_size = 1
+        batch_size = 40
         total_loss = 0
 
         hidden = model.LSTM[0].init_hidden(batch_size=batch_size)
